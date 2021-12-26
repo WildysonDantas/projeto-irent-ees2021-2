@@ -1,24 +1,25 @@
 const router = require('express').Router();
-const { check } = require('express-validator');
 const auth = require('../middlewares/auth');
-const userController = require('../controllers/user.controllers');
+const UsersService = require('../controllers/user.services');
+const User = require('../models/user.model');
 
-// ==> Rota responsável por criar um novo 'User': (POST) localhost:3000/api/v1/register
-router.post('/register', [check('email', 'Email inválido').isEmail()], userController.registerNewUser);
+const usersService = new UsersService(User);
 
-/*
-  ==> Rota responsável por gerar o token e o refreshToken de 'User':
-  (POST) localhost:3000/api/v1/login
- */
-router.post('/login', [check('email', 'Email inválido').isEmail()], userController.loginUser);
+router.get('/', auth, async (req, res) => {
+  try {
+    const users = usersService.get();
+    if (!users) return res.sendStatus(204);
+    return res.json(users);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+});
 
-// ==> Rota responsável por gerar um novo token de 'User': (POST) localhost:3000/api/v1/refresh
-router.post('/refresh', userController.refreshToken);
+// router.get('/profile', auth, userController.userProfile);
 
-router.get('/userProfile', auth, userController.userProfile);
+// router.delete('/users', auth, userController.deleteUser);
 
-router.get('/', auth, userController.allUsers);
-router.delete('/users', auth, userController.deleteUser);
 // router.put('/users', auth, userController.updateUser);
 
 module.exports = router;

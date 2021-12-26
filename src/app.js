@@ -18,11 +18,8 @@ app.use(express.json({ type: 'application/vnd.api+json' }));
 app.use(morgan('common'));
 app.use(cors(corsOptions));
 app.use(cookieParser());
-
 app.use(errorHandler);
-
 app.set('mongoose connection', mongooseConnection);
-
 app.use(index);
 
 module.exports = app;
