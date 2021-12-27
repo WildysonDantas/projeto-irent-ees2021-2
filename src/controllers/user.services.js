@@ -8,7 +8,7 @@ class UsersService {
 
   get () {
     try {
-      return this.User.find({}, '_id name email');
+      return this.User.find({}, '_id name email createdAt updatedAt');
     } catch (error) {
       throw new Error(error);
     }
@@ -32,7 +32,21 @@ class UsersService {
 
   async getByRefreshToken (refreshToken) {
     try {
-      return await this.User.findOne({ refreshToken }).exec();
+      return await this.User
+        .findOne({ refreshToken })
+        .select('-password -__v -token -refreshToken ')
+        .exec();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async getByToken (token) {
+    try {
+      return await this.User
+        .findOne({ token })
+        .select('-password -__v -token -refreshToken ')
+        .exec();
     } catch (err) {
       throw new Error(err);
     }
@@ -101,44 +115,5 @@ class UsersService {
     }
   }
 }
+
 module.exports = UsersService;
-/*
-exports.allUsers = async (req, res) => {
-  try {
-    const users = await User.find().select('-password -token -refreshToken -__v').exec();
-    if (!users) return res.sendStatus(204);
-    return res.json(users);
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
-};
-
-exports.userProfile = async (req, res) => {
-  try {
-    return res.json(req.userData);
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
-};
-
-exports.deleteUser = async (req, res) => {
-  if (!req?.body?.id) return res.sendStatus(400);
-  const user = await User.findOne({ _id: req.body.id }).exec();
-  if (!user) {
-    return res.sendStatus(400);
-  }
-  try {
-    await user.deleteOne({ _id: req.body.id });
-    return res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
-}; */
-
-/* // TODO: Implementar updateUser
-  exports.updateUser = async (req, res) => {
-
-  }; */

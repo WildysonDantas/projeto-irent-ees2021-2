@@ -109,14 +109,18 @@ router.get('/logout', async (req, res) => {
     return res.sendStatus(204);
   }
   res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+  foundUser.token = '';
+  foundUser.refreshToken = '';
+  await foundUser.save();
   return res.sendStatus(204);
 });
+
+module.exports = router;
 
 /* router.post('/forgotpassword/', async (req, res) => {
 
 }); */
 
-module.exports = router;
 /*
 
 // ==> Rota para inserir o email de recuperação
