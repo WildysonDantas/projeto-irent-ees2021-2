@@ -1,4 +1,4 @@
-// const User = require('../models/user.model');
+const bcrypt = require('bcryptjs');
 
 // eslint-disable-next-line no-unused-vars
 class UsersService {
@@ -8,7 +8,7 @@ class UsersService {
 
   get () {
     try {
-      return this.User.find({}, '_id name email');
+      return this.User.find({}, '_id name email createdAt updatedAt');
     } catch (error) {
       throw new Error(error);
     }
@@ -32,7 +32,32 @@ class UsersService {
 
   async getByRefreshToken (refreshToken) {
     try {
-      return await this.User.findOne({ refreshToken }).exec();
+      return await this.User
+        .findOne({ refreshToken })
+        .select('-password -__v -token -refreshToken ')
+        .exec();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async getByToken (token) {
+    try {
+      return await this.User
+        .findOne({ token })
+        .select('-password -__v -token -refreshToken ')
+        .exec();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async getByResetToken (resetToken) {
+    try {
+      return await this.User
+        .findOne({ resetToken })
+        .select('-password -__v -token -refreshToken ')
+        .exec();
     } catch (err) {
       throw new Error(err);
     }
@@ -74,9 +99,18 @@ class UsersService {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  async createResetToken (userDTO) {
+    try {
+      return await userDTO.generateResetToken();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   async removeToken (userDTO) {
     try {
-      const user = userDTO.refreshToken;
+      const user = userDTO;
       user.token = '';
       user.refreshToken = '';
       return await user.save();
@@ -85,9 +119,25 @@ class UsersService {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  async removeResetToken (userDTO) {
+    try {
+      const user = userDTO;
+      user.resetToken = '';
+      return await user.save();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   async update (id, userDTO) {
     try {
-      await this.User.findOneAndUpdate({ _id: id }, userDTO);
+      if (userDTO?.password) {
+        const user = userDTO;
+        user.password = await bcrypt.hash(user.password, 10);
+        return await this.User.findOneAndUpdate({ _id: id }, user);
+      }
+      return await this.User.findOneAndUpdate({ _id: id }, userDTO);
     } catch (err) {
       throw new Error(err);
     }
@@ -101,44 +151,5 @@ class UsersService {
     }
   }
 }
+
 module.exports = UsersService;
-/*
-exports.allUsers = async (req, res) => {
-  try {
-    const users = await User.find().select('-password -token -refreshToken -__v').exec();
-    if (!users) return res.sendStatus(204);
-    return res.json(users);
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
-};
-
-exports.userProfile = async (req, res) => {
-  try {
-    return res.json(req.userData);
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
-};
-
-exports.deleteUser = async (req, res) => {
-  if (!req?.body?.id) return res.sendStatus(400);
-  const user = await User.findOne({ _id: req.body.id }).exec();
-  if (!user) {
-    return res.sendStatus(400);
-  }
-  try {
-    await user.deleteOne({ _id: req.body.id });
-    return res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
-}; */
-
-/* // TODO: Implementar updateUser
-  exports.updateUser = async (req, res) => {
-
-  }; */
