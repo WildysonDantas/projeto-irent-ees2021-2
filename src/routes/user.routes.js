@@ -55,8 +55,15 @@ router.put(
   [
     auth,
     [
-      body('email', 'Email inválido').isEmail().normalizeEmail(),
-      body('nome', 'Digite pelo menos 8 caracteres').isLength({ min: 8 }).trim().escape(),
+      body('email', 'Email inválido')
+        .optional({ checkFalsy: false })
+        .isEmail()
+        .normalizeEmail(),
+      body('name', 'Digite pelo menos 8 caracteres')
+        .optional({ checkFalsy: false })
+        .isLength({ min: 8 })
+        .trim()
+        .escape(),
     ],
   ],
 

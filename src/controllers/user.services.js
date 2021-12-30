@@ -88,9 +88,18 @@ class UsersService {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  async createResetToken (userDTO) {
+    try {
+      return await userDTO.generateResetToken();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   async removeToken (userDTO) {
     try {
-      const user = userDTO.refreshToken;
+      const user = userDTO;
       user.token = '';
       user.refreshToken = '';
       return await user.save();

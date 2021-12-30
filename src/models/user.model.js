@@ -10,6 +10,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   token: { type: String },
   refreshToken: { type: String },
+  resetToken: { type: String },
   /* tokens: [
     { token: { type: String } },
     { refreshToken: { type: String } },
@@ -58,8 +59,19 @@ userSchema.methods.generateRefreshToken = async function () {
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: '1d' },
   );
-  // Saving refreshToken with current user
   user.refreshToken = refreshToken;
+  await user.save();
+  return user;
+};
+
+userSchema.methods.generateResetToken = async function () {
+  const user = this;
+  const resetToken = jwt.sign(
+    { _id: user._id },
+    process.env.RESET_TOKEN_SECRET,
+    { expiresIn: '2d' },
+  );
+  user.resetToken = resetToken;
   await user.save();
   return user;
 };

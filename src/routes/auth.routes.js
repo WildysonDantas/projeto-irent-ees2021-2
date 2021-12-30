@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const UsersService = require('../controllers/user.services');
 const User = require('../models/user.model');
+const { sendMail } = require('../controllers/email.service');
 
 const usersService = new UsersService(User);
 
@@ -92,7 +93,7 @@ router.post(
       process.env.REFRESH_TOKEN_SECRET,
       async (err, decoded) => {
         if (err || foundUser._id.toString() !== decoded._id) return res.sendStatus(403);
-        foundUser = await foundUser.generateAuthToken();
+        foundUser = await usersService.createAccessToken();
         return res.json({ token: foundUser.token });
       },
     );
@@ -109,17 +110,50 @@ router.get('/logout', async (req, res) => {
     return res.sendStatus(204);
   }
   res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-  foundUser.token = '';
-  foundUser.refreshToken = '';
-  await foundUser.save();
-  return res.sendStatus(204);
+  await usersService.removeToken(foundUser);
+  return res.sendStatus(200);
 });
 
-module.exports = router;
+router.post('/forgotpassword/', [
+  check('email', 'Email inválido').isEmail(),
+], async (req, res) => {
+  // Verifica se tem erro no body.email
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
-/* router.post('/forgotpassword/', async (req, res) => {
+  // verifica se ohá um usuário logado
+  const { cookies } = req;
+  if (cookies?.jwt) return res.sendStatus(302);
 
-}); */
+  // localiza algum usuário com o email cadastrado
+  let foundUser = await usersService.getByEmail(req.body.email);
+  if (!foundUser) {
+    console.log('trouxa');
+    return res.sendStatus(200);
+  }
+
+  // Envia o email com o token de recuperação
+  try {
+    foundUser = await usersService.createResetToken(foundUser);
+    const link = `http://localhost:3000/api/v1/auth/reset/${foundUser.resetToken.toString()}`;
+    const mailOptions = {
+      from: 'IRENT IFPI 2021 🏡 <irent.ifpi.2021@gmail.com>',
+      to: foundUser.email.toString(),
+      subject: 'Recuperação de senha - iRent IFPI',
+      text: 'Link de recuperação',
+      html: `<h3>Olá ${foundUser.name.toString()}!</h3>\n\nPara alterar a senha de acesso ao nosso sistema clique <a href="${link}">aqui</a>. Caso não consiga, copie e cole o link abaixo no seu navegador\n\n${link}`,
+    };
+    sendMail(mailOptions)
+      .then((result) => console.log('Email enviado...', result))
+      .catch((error) => console.log(error.message));
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(200);
+  }
+});
 
 /*
 
@@ -129,3 +163,5 @@ router.post('/reset/:token');
 
 router.post('/resetdone');
  */
+
+module.exports = router;
