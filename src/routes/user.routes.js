@@ -77,8 +77,8 @@ router.put(
     if (!user) return res.sendStatus(400);
     try {
       const { id, name, email } = req.body;
-      const newUser = { name, email };
-      await usersService.update(id, newUser);
+      const updatedUser = { name, email };
+      await usersService.update(id, updatedUser);
       return res.sendStatus(200);
     } catch (error) {
       console.log(error);

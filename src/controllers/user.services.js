@@ -1,4 +1,4 @@
-// const User = require('../models/user.model');
+const bcrypt = require('bcryptjs');
 
 // eslint-disable-next-line no-unused-vars
 class UsersService {
@@ -45,6 +45,17 @@ class UsersService {
     try {
       return await this.User
         .findOne({ token })
+        .select('-password -__v -token -refreshToken ')
+        .exec();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async getByResetToken (resetToken) {
+    try {
+      return await this.User
+        .findOne({ resetToken })
         .select('-password -__v -token -refreshToken ')
         .exec();
     } catch (err) {
@@ -108,9 +119,25 @@ class UsersService {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  async removeResetToken (userDTO) {
+    try {
+      const user = userDTO;
+      user.resetToken = '';
+      return await user.save();
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   async update (id, userDTO) {
     try {
-      await this.User.findOneAndUpdate({ _id: id }, userDTO);
+      if (userDTO?.password) {
+        const user = userDTO;
+        user.password = await bcrypt.hash(user.password, 10);
+        return await this.User.findOneAndUpdate({ _id: id }, user);
+      }
+      return await this.User.findOneAndUpdate({ _id: id }, userDTO);
     } catch (err) {
       throw new Error(err);
     }

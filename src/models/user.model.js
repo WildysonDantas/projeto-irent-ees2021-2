@@ -67,7 +67,7 @@ userSchema.methods.generateRefreshToken = async function () {
 userSchema.methods.generateResetToken = async function () {
   const user = this;
   const resetToken = jwt.sign(
-    { _id: user._id },
+    { email: user.email },
     process.env.RESET_TOKEN_SECRET,
     { expiresIn: '2d' },
   );
