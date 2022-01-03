@@ -4,9 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon --ignore \"*.test.js\"",
     "start": "node server.js",
-    "lint": "eslint --fix --ext .js"
+    "lint": "eslint --fix --ext .js",
+    "test": "jest --setupFiles dotenv/config"
   },
   "keywords": [],
   "author": "",
@@ -28,12 +29,15 @@
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.2",
+    "supertest": "^6.1.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/jest": "^27.4.0",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
+    "jest": "^27.4.5",
     "nodemon": "^2.0.15"
   }
 }
