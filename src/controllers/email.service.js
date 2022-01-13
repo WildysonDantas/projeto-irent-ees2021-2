@@ -21,7 +21,7 @@ async function sendMail (mailOptions) {
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: 'irent.ifpi.2021@gmail.com',
+        user: process.env.EMAIL_ADRESS,
         clientId: CLIENT_ID,
         clientSecret: CLEINT_SECRET,
         refreshToken: REFRESH_TOKEN,

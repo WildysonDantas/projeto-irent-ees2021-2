@@ -10,15 +10,15 @@ class UsersService {
     try {
       return this.User.find({}, '_id name email createdAt updatedAt');
     } catch (error) {
-      throw new Error(error);
+      return new Error(error);
     }
   }
 
   async getById (id) {
     try {
-      return await this.User.findById(id, '_id name email');
+      return await this.User.findById(id, '_id name email isAdmin');
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -26,7 +26,7 @@ class UsersService {
     try {
       return await this.User.findOne({ email }).exec();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -34,10 +34,10 @@ class UsersService {
     try {
       return await this.User
         .findOne({ refreshToken })
-        .select('-password -__v -token -refreshToken ')
+        .select('-password -__v -token -refreshToken -resetToken -isAdmin ')
         .exec();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -48,7 +48,7 @@ class UsersService {
         .select('-password -__v -token -refreshToken ')
         .exec();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -59,7 +59,7 @@ class UsersService {
         .select('-password -__v -token -refreshToken ')
         .exec();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -67,7 +67,16 @@ class UsersService {
     try {
       return await this.User.findByCredentials(userDTO.email, userDTO.password);
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
+    }
+  }
+
+  async isAdmin (id) {
+    try {
+      const user = await this.User.findById(id);
+      return user.isAdmin ? true : false;
+    } catch (err) {
+      return new Error(err);
     }
   }
 
@@ -76,7 +85,7 @@ class UsersService {
       const user = new this.User(userDTO);
       return await user.save();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -85,7 +94,7 @@ class UsersService {
     try {
       return await userDTO.generateAuthToken();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -94,7 +103,7 @@ class UsersService {
     try {
       return await userDTO.generateRefreshToken();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -103,7 +112,7 @@ class UsersService {
     try {
       return await userDTO.generateResetToken();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -115,7 +124,7 @@ class UsersService {
       user.refreshToken = '';
       return await user.save();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -126,7 +135,7 @@ class UsersService {
       user.resetToken = '';
       return await user.save();
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -139,7 +148,7 @@ class UsersService {
       }
       return await this.User.findOneAndUpdate({ _id: id }, userDTO);
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 
@@ -147,7 +156,7 @@ class UsersService {
     try {
       await this.User.deleteOne({ _id: id });
     } catch (err) {
-      throw new Error(err);
+      return new Error(err);
     }
   }
 }
