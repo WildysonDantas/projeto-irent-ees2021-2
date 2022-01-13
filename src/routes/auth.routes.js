@@ -15,9 +15,9 @@ router.post(
     check('confirmPassword', 'Digite pelo menos 5 caracteres').isLength({ min: 5 }),
     check(
       'password',
-      'Digite pelo menos 8 caracteres',
+      'Digite pelo menos 5 caracteres',
     )
-      .isLength({ min: 8 })
+      .isLength({ min: 5 })
       .custom(
         (value, { req }) => {
           if (value !== req.body.confirmPassword) {

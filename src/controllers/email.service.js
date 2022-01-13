@@ -3,12 +3,12 @@ const { google } = require('googleapis');
 
 // These id's and secrets should come from .env file.
 const {
-  CLIENT_ID, CLEINT_SECRET, REDIRECT_URI, REFRESH_TOKEN,
+  CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN,
 } = process.env;
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
-  CLEINT_SECRET,
+  CLIENT_SECRET,
   REDIRECT_URI,
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
