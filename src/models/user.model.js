@@ -11,6 +11,7 @@ const userSchema = new Schema({
   token: { type: String },
   refreshToken: { type: String },
   resetToken: { type: String },
+  isAdmin: { type: Boolean, default: false }
   /* tokens: [
     { token: { type: String } },
     { refreshToken: { type: String } },

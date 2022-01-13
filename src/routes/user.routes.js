@@ -7,8 +7,20 @@ const User = require('../models/user.model');
 
 const usersService = new UsersService(User);
 
+async function userIsAdmin (req, res) {
+  // verifica se o usuário logado tem acesso
+  const { _id } = jwt.decode(req.cookies.jwt);
+  if (!_id) return res.sendStatus(403);
+
+  const user = await usersService.getById(_id);
+  return user.isAdmin ? true : false;
+}
+
 router.get('/', auth, async (req, res) => {
   try {
+
+    if (!userIsAdmin(req, res)) return res.sendStatus(403);
+
     const users = await usersService.get();
     if (!users) return res.sendStatus(204);
     return res.json(users);
@@ -18,23 +30,18 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-router.get('/profile', auth, async (req, res) => {
+// TODO: Corrigir a rota 
+router.get('/user', auth, async (req, res) => {
   const { cookies } = req;
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
   const foundUser = await usersService.getByRefreshToken(refreshToken);
   if (!foundUser) return res.sendStatus(403);
-  return jwt.verify(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET,
-    async (err, decoded) => {
-      if (err || foundUser._id.toString() !== decoded._id) return res.sendStatus(403);
-      return res.json({ user: foundUser });
-    },
-  );
+  return res.json(foundUser)
 });
 
 router.delete('/', auth, async (req, res) => {
+  if (!userIsAdmin(req, res)) return res.sendStatus(403);
   if (!req?.body?.id) return res.sendStatus(400);
   const user = await usersService.getById(req.body.id);
   if (!user) {
@@ -72,9 +79,19 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
     if (!req?.body?.id) return res.sendStatus(400);
+
     const user = await usersService.getById(req.body.id);
     if (!user) return res.sendStatus(400);
+
+    const { _id } = jwt.decode(req.cookies.jwt);
+    if (!_id) return res.sendStatus(403);
+
+    const logedUser = await usersService.getById(_id);
+
+    if (!(logedUser._id === user._id || logedUser.isAdmin)) return res.sendStatus(403)
+
     try {
       const { id, name, email } = req.body;
       const updatedUser = { name, email };
