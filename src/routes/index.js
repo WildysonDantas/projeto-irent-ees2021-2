@@ -1,18 +1,19 @@
 const express = require('express');
-const authRoutes = require('./auth.routes');
-const userRoutes = require('./user.routes');
+//const authRoutes = require('./auth.routes');
+//const userRoutes = require('./user.routes');
+const rentRoutes = require('./rent.routes');
 
 const router = express.Router();
-
-router.get('/api/v1', (req, res) => {
+router.use('/api/v1/rent/', rentRoutes);
+router.get('/api/v1/rent/home', (req, res) => {
   res.status(200).send({
     sucess: true,
-    message: '🏡 iRent - Auth & Users',
+    message: 'iRent - RENTS HOUSES',
     version: '1.0.0',
   });
 });
 
-router.use('/api/v1/auth', authRoutes);
-router.use('/api/v1/users', userRoutes);
+//router.use('/api/v1/auth', authRoutes);
+//router.use('/api/v1/users', userRoutes);
 
 module.exports = router;
