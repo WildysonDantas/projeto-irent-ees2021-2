@@ -7,7 +7,7 @@ const router = express.Router();
 router.use('/api/v1/rent/', rentRoutes);
 router.get('/api/v1/rent/home', (req, res) => {
   res.status(200).send({
-    sucess: true,
+    success: true,
     message: 'iRent - RENTS HOUSES',
     version: '1.0.0',
   });
