@@ -1,21 +1,21 @@
 # projeto-irent-ees2021-2
-projeto-irent-ees2021-2 created by GitHub Classroom
-
-# APIs
-=> API Gateway
-online: https://api-gatewayirent.herokuapp.com
-github: https://github.com/L30NARDO/api-geteway
-links: * /immobile
-       * /user
-       * /rent
-=> Imovel
-online: https://imoveisbackend.herokuapp.com
-github: https://github.com/L30NARDO/imovel
-links: * GET /imovel
-       * POST /imovel 
-       * PUT /imovel/{id}
-       * DELETE /imovel/{id}
-        Objeto JSON {
+projeto-irent-ees2021-2 created by GitHub Classroom <br/>
+<hr/>
+# API <br/>
+ >>> API Gateway <br/>
+online: https://api-gatewayirent.herokuapp.com <br/>
+github: https://github.com/L30NARDO/api-geteway <br/>
+links: <br/> * /immobile <br/>
+       * /user <br/>
+       * /rent <br/> <br/>
+>>> Imovel <br/>
+online: https://imoveisbackend.herokuapp.com <br/>
+github: https://github.com/L30NARDO/imovel<br/>
+links: <br/> * GET /imovel <br/>
+       * POST /imovel <br/>
+       * PUT /imovel/{id} <br/>
+       * DELETE /imovel/{id} <br/>
+Objeto JSON: <br/> {
         "nomeProprietario": "",
         "email": "",
         "celular": "",
@@ -27,5 +27,5 @@ links: * GET /imovel
         "cidade": "",
         "estado": "",
         "descricaoImovel": ""
-        }
+        } <br/>
 
