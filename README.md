@@ -20,8 +20,8 @@ online: https://irent-rent.herokuapp.com/api/v1/rent <br/>
 git: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/wildyson <br/>
 
 >>> Users API <br />
-Online: https://irent-users.herokuapp.com
-Github: https://github.com/mwenyo/node-ts-postgres
+Online: https://irent-users.herokuapp.com <br />
+Github: https://github.com/mwenyo/node-ts-postgres <br />
 Objeto JSON: 
 
 ```javascript
