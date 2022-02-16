@@ -15,7 +15,9 @@ links: <br/> * GET /imovel <br/>
        * POST /imovel <br/>
        * PUT /imovel/{id} <br/>
        * DELETE /imovel/{id} <br/>
-Objeto JSON: <br/> {
+Objeto JSON: 
+```json
+{
         "nomeProprietario": "",
         "email": "",
         "celular": "",
@@ -27,5 +29,6 @@ Objeto JSON: <br/> {
         "cidade": "",
         "estado": "",
         "descricaoImovel": ""
-        } <br/>
+        }
+```
 
