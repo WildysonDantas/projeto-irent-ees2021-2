@@ -23,7 +23,7 @@ git: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/wildyson <br/>
 Online: https://irent-users.herokuapp.com <br/>
 Github: https://github.com/mwenyo/node-ts-postgres <br/>
 
-Objeto JSON: 
+Objeto JSON Imovel: 
 
 ```javascript
 {
