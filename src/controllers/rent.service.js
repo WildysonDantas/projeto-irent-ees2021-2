@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-
+const https = require('https');
 // eslint-disable-next-line no-unused-vars
 class RentService {
   constructor(Rent) {
@@ -33,9 +33,92 @@ class RentService {
     }
   }
 
+ async isEmpty(obj) {
+    for(var prop in obj) {
+      if(obj.hasOwnProperty(prop)) {
+        return false;
+      }
+    }
+    return JSON.stringify(obj) === JSON.stringify({});
+  }
+
+  async getHouseByIdAnotherApi(rent, house){
+
+    const url = 'https://api-gatewayirent.herokuapp.com/immobile/imovel/'+house;
+
+    console.log(url);
+    let p = new Promise((resolve, reject) => {
+    const response =  https.get(url, (res) => {
+      console.log('statusCode:', res.statusCode);
+        
+      let data = '';
+      res.on('data', (chunk) => {
+          data = data + chunk.toString();
+      });
+
+      res.on('end', () => {
+          const body = JSON.parse(data);
+          body.statusCode = res.statusCode;
+          resolve(body);
+          console.log('promisse');
+      });
+  
+      }).on('error', (e) => {
+        reject.error(e);
+      });
+
+      response.end();
+    });
+
+    return await p;
+  }
+  
+
   async getById (id) {
+
+   
+
     try {
-      return await this.Rent.findById(id);
+      let p = new Promise((resolve, reject) => {
+        
+        try{
+          const resp =  this.Rent.findById(id);
+          resolve(resp);
+        }catch(err){
+          reject.log(err);
+        }
+
+      });
+
+      let resp = await p;
+
+      if(Object.values(resp).length > 0 ){
+        console.log('algo');
+        try {
+          const house = await this.getHouseByIdAnotherApi('wildyson', resp._idHouse);
+          //resp.house =[house];
+          //resp['house'] =house;
+          let c ={
+            house: house,
+            rent: resp
+          }
+
+          return c;
+
+        
+          
+        } catch (error) {
+
+          console.log(error);
+        }
+        
+        return resp;
+      }
+
+      return resp;
+      
+     
+
     } catch (err) {
       return new Error(err);
     }

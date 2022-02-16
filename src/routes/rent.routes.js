@@ -5,6 +5,7 @@ const RentService = require('../controllers/rent.service');
 const Rent = require('../models/rent.model');
 
 
+
 const rentService = new RentService(Rent);
 
 
@@ -93,7 +94,7 @@ router.get(
       const r = await rentService.getById(id);
       
       if(isEmpty(r)){
-        res.status(404).json(
+        return res.status(404).json(
           { message: 'Aluguel não encontrado',
             success: false,
           }
