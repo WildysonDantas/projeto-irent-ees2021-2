@@ -15,9 +15,9 @@ links: <br/> * GET /imovel <br/>
        * POST /imovel <br/>
        * PUT /imovel/{id} <br/>
        * DELETE /imovel/{id} <br/>
->>> Aluguel
-online: https://irent-rent.herokuapp.com/api/v1/rent
-git: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/wildyson
+>>> Aluguel <br/>
+online: https://irent-rent.herokuapp.com/api/v1/rent <br/>
+git: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/wildyson <br/>
 
 Objeto JSON: 
 
