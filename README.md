@@ -16,19 +16,20 @@ links: <br/> * GET /imovel <br/>
        * PUT /imovel/{id} <br/>
        * DELETE /imovel/{id} <br/>
 Objeto JSON: 
-```json
+
+```javascript
 {
-        "nomeProprietario": "",
-        "email": "",
-        "celular": "",
-        "tipoImovel": "",
-        "enderecoImovel": "",
-        "numero": "",
-        "bairro": "",
-        "complemento": "",
-        "cidade": "",
-        "estado": "",
-        "descricaoImovel": ""
-        }
+  "nomeProprietario": "",
+  "email": "",
+  "celular": "",
+  "tipoImovel": "",
+  "enderecoImovel": "",
+  "numero": "",
+  "bairro": "",
+  "complemento": "",
+  "cidade": "",
+  "estado": "",
+  "descricaoImovel": ""
+ }
 ```
 
