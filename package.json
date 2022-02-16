@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon --ignore \"*.test.js\"",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "lint": "eslint --fix --ext .js",
     "test": "jest --setupFiles dotenv/config"
   },
