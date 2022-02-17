@@ -21,7 +21,6 @@ git: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/wildyson <br/>
 >>> User API <br/>
 Online: https://irent-users.herokuapp.com <br/>
 Github: https://github.com/mwenyo/node-ts-postgres <br/>
-
 >>> Front <br />
 online: https://angry-davinci-fbc496.netlify.app/login/ <br />
 github: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/front <br/>
