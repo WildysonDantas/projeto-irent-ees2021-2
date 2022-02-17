@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;700&family=Roboto:wght@300;400;500&family=Ubuntu:wght@400;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+body{
+    background: aliceblue;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+}
+.content{
+    background-color: #fff;
+    border-radius: 15px;
+    width: 60%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.title{
+    
+    font-size: 28px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.title-primary{
+    color: #fff;
+}
+.description{
+    font-size: 14px;
+    font-weight:300 ;
+    line-height: 30px;
+}
+.btn{
+    border-radius: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 10px 50px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 150px;
+    align-self: center;
+    border-width: 0px;
+    margin-top: 1rem;
+}
+.btn-inscricao{
+    background-color:#2D90E3 ;
+    border: 1px solid #fff;
+    transition: background-color 1s;
+    width: 200px;
+}
+.btn-primary:hover{
+    background-color: #fff;
+    color: #00BFFF;
+}
+.btn-primary {
+
+    background-color: #2D90E3;
+    border: 1px solid #fff;
+    transition: background-color 1s;
+}
+.first-column{
+    text-align: center;
+   width: 40%;
+    z-index: 10;
+
+}
+.title-second{
+    color: #2D90E3;
+    
+}
+.content::before {
+    content: "";
+    position: absolute;
+    background-color:#2D90E3;
+    width: 40%;
+    height: 100%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    left: 0;
+
+}
+.second-column{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.first-content{
+    display: flex;
+    
+}
+.first-content .second-column{
+    z-index: 11;
+}
+.form{
+    display: flex;
+    flex-direction:column ;
+    width: 65%;
+    text-align: center;
+    
+}
+.form input{
+    height: 45px;
+    border: none;
+    background-color: #ecf0f1;
+    margin: 8px;
+}
+
+.second-content{
+    position: absolute;
+    display: flex;
+}
+.description-primary{
+    color: #fff;
+}
+.description-second{
+    color: #7f8c8d;
+}
+.btn-second{
+    background-color:#2D90E3 ;
+    border: 1px solid #2D90E3;
+    transition: background-color 1s;
+    text-align: center;
+    width: 200px;
+}
+.btn-second:hover{
+    background-color: #fff;
+    border: 1px solid #2D90E3;
+    color: #2D90E3;
+}
+.second-content .first-column{
+    order: 2;
+    z-index: -1;
+}
+.second-content .second-column{
+    order: 1;
+    z-index: -1;
+}
+
+.sign-in-js  .first-content .first-column,
+.sign-in-js .first-content  .second-column{
+    z-index: -1;
+}
+.sign-in-js  .second-content .first-column,
+.sign-in-js .second-content  .second-column{
+    z-index: 11;
+}
+.sign-in-js  .content::before{
+    left: 60%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.sign-up-js  .second-content .first-column,
+.sign-up-js .second-content  .second-column{
+    z-index: -1;
+}
+.sign-up-js  .first-content .first-column,
+.sign-up-js .first-content  .second-column{
+    z-index: 11;
+}
+
+
