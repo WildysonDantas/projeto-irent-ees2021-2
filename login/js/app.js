@@ -37,7 +37,7 @@ btnSendSignin.addEventListener("click", async function (e) {
     localStorage.setItem('jwt', JSON.stringify(token))
     localStorage.setItem('user', JSON.stringify(user))
     alert(`Seja bem-vindo ${user.name}!`)
-    //window.location.href = '/login/cadastrarClientes.html'
+    window.location.href = '/login/cadastrarClientes.html'
   } else {
     console.log(data)
     alert(data)
