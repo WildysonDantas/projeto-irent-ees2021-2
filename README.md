@@ -24,6 +24,8 @@ Github: https://github.com/mwenyo/node-ts-postgres <br/>
 >>> Front <br />
 online: https://angry-davinci-fbc496.netlify.app/login/ <br />
 github: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/front <br/>
+email: admin@irent-ifpi.com <br/>
+senha: 12345678
 
 Objeto JSON Imovel: 
 
