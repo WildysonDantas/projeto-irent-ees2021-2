@@ -11,18 +11,19 @@ links: <br/> * /immobile <br/>
 >>> Imovel <br/>
 online: https://imoveisbackend.herokuapp.com <br/>
 github: https://github.com/L30NARDO/imovel<br/>
-links: <br/> * GET /imovel <br/>
+links: <br/> 
+         * GET /imovel <br/>
        * POST /imovel <br/>
        * PUT /imovel/{id} <br/>
        * DELETE /imovel/{id} <br/>
 
 
->>> User API <br/>
+>>> User API <br />
 Online: https://irent-users.herokuapp.com <br/>
 Github: https://github.com/mwenyo/node-ts-postgres <br/>
 
->>> Aluguel API <br/>
-online: https://irent-rent.herokuapp.com/rent/api/v1/home <br/>
+>>> Aluguel API <br />
+online: https://irent-rent.herokuapp.com/api/v1/rent/home <br/>
 github: https://github.com/ifpi-picos/projeto-irent-ees2021-2/tree/wildyson <br/>
 
 >>> Front <br />
